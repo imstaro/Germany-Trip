@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Germany & Switzerland 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F5F0E8;
+  --dark: #1A1A1A;
+  --gold: #C9A84C;
+  --forest: #2D4A3E;
+  --rust: #8B4513;
+  --slate: #4A5568;
+  --line: rgba(26,26,26,0.1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--dark);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* HERO */
+.hero {
+  background: var(--forest);
+  padding: 56px 22px 52px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 36px;
+  background: var(--cream);
+  clip-path: ellipse(55% 100% at 50% 100%);
+}
+.hero-inner { max-width: 640px; margin: 0 auto; position: relative; z-index: 2; }
+
+.tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tag::before { content: ''; width: 20px; height: 1px; background: var(--gold); }
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(44px, 12vw, 80px);
+  font-weight: 900;
+  line-height: 1.0;
+  color: var(--cream);
+  margin-bottom: 18px;
+}
+.hero-title em { font-style: italic; color: var(--gold); }
+
+.hero-sub {
+  color: rgba(245,240,232,0.58);
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 28px;
+  max-width: 300px;
+}
+
+.hero-meta {
+  display: flex;
+  border: 1px solid rgba(245,240,232,0.13);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 28px;
+}
+.meta-item {
+  flex: 1;
+  padding: 12px 14px;
+  border-right: 1px solid rgba(245,240,232,0.09);
+  display: flex; flex-direction: column; gap: 3px;
+}
+.meta-item:last-child { border-right: none; }
+.meta-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; color: var(--gold); text-transform: uppercase; }
+.meta-value { color: var(--cream); font-size: 13px; font-weight: 500; }
+
+.map-wrap {
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(245,240,232,0.1);
+  padding: 14px;
+}
+.map-svg { width: 100%; height: auto; display: block; }
+
+.route-path {
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  animation: drawRoute 3s ease-in-out 0.5s forwards;
+}
+@keyframes drawRoute { to { stroke-dashoffset: 0; } }
+.city-dot { opacity: 0; animation: popIn 0.35s ease forwards; }
+.city-dot:nth-child(1) { animation-delay: 0.9s; }
+.city-dot:nth-child(2) { animation-delay: 1.3s; }
+.city-dot:nth-child(3) { animation-delay: 1.7s; }
+.city-dot:nth-child(4) { animation-delay: 2.1s; }
+.city-dot:nth-child(5) { animation-delay: 2.5s; }
+.city-dot:nth-child(6) { animation-delay: 2.9s; }
+.city-dot:nth-child(7) { animation-delay: 3.1s; }
+@keyframes popIn {
+  0%   { opacity: 0; transform: scale(0.4); }
+  70%  { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* SECTIONS */
+section { padding: 52px 0; }
+.container { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.24em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-label::before { content: ''; width: 20px; height: 1px; background: var(--gold); }
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 7vw, 42px);
+  font-weight: 700;
+  line-height: 1.18;
+  margin-bottom: 28px;
+}
+
+/* ITINERARY */
+.itinerary { background: var(--dark); }
+.itinerary .section-title { color: var(--cream); }
+.hint { color: rgba(245,240,232,0.35); font-size: 11px; margin-bottom: 18px; font-family: 'DM Mono', monospace; }
+
+.days-list { display: flex; flex-direction: column; gap: 3px; }
+
+.day-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(245,240,232,0.07);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.day-card.hl { border-color: rgba(201,168,76,0.22); background: rgba(201,168,76,0.04); }
+
+.day-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  gap: 10px;
+}
+
+.day-left { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
+
+.date-box {
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.18);
+  border-radius: 3px;
+  padding: 5px 9px;
+  min-width: 50px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.date-box .mo { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--gold); letter-spacing: 0.1em; display: block; }
+.date-box .dn { font-family: 'Playfair Display', serif; font-size: 19px; color: var(--cream); line-height: 1.1; display: block; }
+
+.day-text { min-width: 0; }
+.day-loc { font-family: 'Playfair Display', serif; font-size: 14px; color: var(--cream); margin-bottom: 2px; line-height: 1.2; }
+.day-ev { font-size: 11px; color: rgba(245,240,232,0.5); }
+
+.badge {
+  display: inline-flex; align-items: center;
+  padding: 4px 9px;
+  border-radius: 2px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.bc { background: rgba(201,168,76,0.13); color: var(--gold); border: 1px solid rgba(201,168,76,0.28); }
+.bd { background: rgba(45,74,62,0.5); color: #7EC8A0; border: 1px solid rgba(126,200,160,0.18); }
+.ba { background: rgba(139,69,19,0.18); color: #E8A87C; border: 1px solid rgba(232,168,124,0.28); }
+
+.day-body { display: none; padding: 0 16px 16px; border-top: 1px solid rgba(245,240,232,0.06); }
+.day-body.open { display: block; }
+.day-detail { font-size: 13px; color: rgba(245,240,232,0.58); line-height: 1.85; padding-top: 13px; }
+.day-detail strong { color: rgba(245,240,232,0.88); font-weight: 500; }
+
+/* ROUTES */
+.route-section { background: var(--cream); }
+.route-cards { display: flex; flex-direction: column; gap: 8px; }
+
+.route-card {
+  background: white;
+  border-radius: 5px;
+  padding: 18px;
+  border-left: 3px solid transparent;
+  transition: border-color 0.2s;
+}
+.route-card:active { border-color: var(--gold); }
+
+.rh { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; gap: 10px; }
+.rft { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 600; line-height: 1.3; flex: 1; }
+.rarr { color: var(--gold); margin: 0 3px; }
+.rtime { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold); font-weight: 500; flex-shrink: 0; background: rgba(201,168,76,0.1); padding: 3px 8px; border-radius: 2px; }
+
+.rstats { display: flex; gap: 16px; margin-bottom: 8px; flex-wrap: wrap; }
+.rs { display: flex; flex-direction: column; gap: 2px; }
+.rsl { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slate); opacity: 0.65; }
+.rsv { font-size: 13px; font-weight: 500; }
+
+.rnote { font-size: 12px; color: var(--slate); line-height: 1.6; opacity: 0.78; background: rgba(0,0,0,0.03); padding: 9px 11px; border-radius: 3px; }
+
+/* TIPS */
+.tips-section { background: var(--forest); }
+.tips-section .section-title { color: var(--cream); }
+.tips-list { display: flex; flex-direction: column; gap: 8px; }
+
+.tip-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(245,240,232,0.08);
+  border-radius: 6px;
+  padding: 20px 18px;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.tip-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+.tip-title { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--gold); margin-bottom: 7px; }
+.tip-body { font-size: 13px; line-height: 1.78; color: rgba(245,240,232,0.62); }
+.tip-body strong { color: var(--cream); font-weight: 500; }
+
+/* CAR */
+.car-section { background: white; }
+.car-name { font-family: 'Playfair Display', serif; font-size: 26px; margin-bottom: 4px; }
+.car-sub { color: var(--slate); font-size: 13px; margin-bottom: 26px; }
+
+.spec-list { list-style: none; margin-bottom: 28px; }
+.spec-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 13px; gap: 12px; }
+.spec-key { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--slate); letter-spacing: 0.05em; flex-shrink: 0; }
+.spec-val { font-weight: 500; text-align: right; }
+
+.cl-title { font-family: 'Playfair Display', serif; font-size: 19px; margin-bottom: 14px; }
+.cl-items { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.cl-item { display: flex; align-items: flex-start; gap: 11px; font-size: 13px; line-height: 1.5; padding: 11px 13px; background: var(--cream); border-radius: 3px; }
+.cl-item::before { content: '✓'; color: var(--forest); font-weight: 700; flex-shrink: 0; }
+.cl-item.warn::before { content: '⚠'; color: var(--rust); }
+
+/* FOOTER */
+footer { background: var(--dark); padding: 44px 22px; text-align: center; }
+.ft { font-family: 'Playfair Display', serif; font-size: 30px; color: var(--cream); margin-bottom: 10px; }
+.fdiv { width: 28px; height: 1px; background: var(--gold); margin: 20px auto; }
+.fs { color: rgba(245,240,232,0.38); font-size: 11px; font-family: 'DM Mono', monospace; letter-spacing: 0.1em; line-height: 1.9; }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* TABLET+ */
+@media (min-width: 640px) {
+  .route-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .tips-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+}
+@media (min-width: 960px) {
+  .tips-list { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="tag">Travel Itinerary · 2025</div>
+    <h1 class="hero-title">Germany<br>& <em>Swiss</em><br>Road Trip</h1>
+    <p class="hero-sub">클래식 음악과 온천 도시를 잇는 열흘간의 드라이브. 프랑크푸르트에서 시작해 바이에른을 가로질러 스위스까지.</p>
+    <div class="hero-meta">
+      <div class="meta-item"><span class="meta-label">기간</span><span class="meta-value">6/29–7/9</span></div>
+      <div class="meta-item"><span class="meta-label">총 일수</span><span class="meta-value">11일</span></div>
+      <div class="meta-item"><span class="meta-label">이동거리</span><span class="meta-value">~2,000km</span></div>
+    </div>
+    <div class="map-wrap">
+      <svg class="map-svg" viewBox="0 0 400 330" xmlns="http://www.w3.org/2000/svg">
+        <rect width="400" height="330" fill="rgba(255,255,255,0.02)" rx="4"/>
+        <defs>
+          <pattern id="gr" width="28" height="28" patternUnits="userSpaceOnUse">
+            <path d="M 28 0 L 0 0 0 28" fill="none" stroke="rgba(245,240,232,0.04)" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect width="400" height="330" fill="url(#gr)"/>
+        <path d="M 128,38 L 258,30 L 298,58 L 318,98 L 306,152 L 276,182 L 282,216 L 258,244 L 222,258 L 188,250 L 160,228 L 136,204 L 116,168 L 106,126 L 120,82Z"
+          fill="rgba(45,74,62,0.1)" stroke="rgba(245,240,232,0.1)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M 114,268 L 170,254 L 204,260 L 220,278 L 212,302 L 176,314 L 142,306 L 118,290Z"
+          fill="rgba(201,168,76,0.09)" stroke="rgba(201,168,76,0.18)" stroke-width="1.5" stroke-linejoin="round"/>
+        <text x="207" y="145" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="rgba(245,240,232,0.09)" font-style="italic">Deutschland</text>
+        <text x="170" y="290" text-anchor="middle" font-family="Georgia,serif" font-size="9" fill="rgba(201,168,76,0.3)" font-style="italic">Schweiz</text>
+
+        <path class="route-path"
+          d="M 202,102 L 238,148 L 260,78 L 238,148 L 218,158 L 146,224 L 126,280 M 126,280 L 202,102"
+          fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          stroke-dasharray="5,4" opacity="0.75"/>
+
+        <g>
+          <g class="city-dot">
+            <circle cx="202" cy="102" r="6" fill="#2D4A3E"/>
+            <circle cx="202" cy="102" r="2.5" fill="#F5F0E8"/>
+            <text x="212" y="98" font-family="'DM Sans',sans-serif" font-size="10" font-weight="600" fill="#F5F0E8">Frankfurt</text>
+            <text x="212" y="109" font-family="'DM Mono',monospace" font-size="7.5" fill="#C9A84C">6/29 · 7/9</text>
+          </g>
+          <g class="city-dot">
+            <circle cx="238" cy="148" r="5.5" fill="#C9A84C"/>
+            <circle cx="238" cy="148" r="2" fill="#1A1A1A"/>
+            <text x="248" y="144" font-family="'DM Sans',sans-serif" font-size="9" font-weight="500" fill="#F5F0E8">Bad Kissingen</text>
+            <text x="248" y="154" font-family="'DM Mono',monospace" font-size="7" fill="#C9A84C">7/1–7/4</text>
+          </g>
+          <g class="city-dot">
+            <circle cx="260" cy="78" r="5.5" fill="#C9A84C"/>
+            <circle cx="260" cy="78" r="2" fill="#1A1A1A"/>
+            <text x="268" y="74" font-family="'DM Sans',sans-serif" font-size="9" font-weight="500" fill="#F5F0E8">Leipzig</text>
+            <text x="268" y="84" font-family="'DM Mono',monospace" font-size="7" fill="#C9A84C">7/2–7/3</text>
+          </g>
+          <g class="city-dot">
+            <circle cx="218" cy="158" r="4" fill="#8B4513"/>
+            <circle cx="218" cy="158" r="1.5" fill="#F5F0E8"/>
+            <text x="166" y="168" font-family="'DM Sans',sans-serif" font-size="8" fill="rgba(245,240,232,0.65)">Bad Brückenau</text>
+          </g>
+          <g class="city-dot">
+            <circle cx="146" cy="224" r="5.5" fill="#C9A84C"/>
+            <circle cx="146" cy="224" r="2" fill="#1A1A1A"/>
+            <text x="64" y="220" font-family="'DM Sans',sans-serif" font-size="9" font-weight="500" fill="#F5F0E8">Baden-Baden</text>
+            <text x="78" y="230" font-family="'DM Mono',monospace" font-size="7" fill="#C9A84C">7/5–7/6</text>
+          </g>
+          <g class="city-dot">
+            <circle cx="126" cy="280" r="6" fill="#2D4A3E"/>
+            <circle cx="126" cy="280" r="2.5" fill="#F5F0E8"/>
+            <text x="46" y="276" font-family="'DM Sans',sans-serif" font-size="8.5" font-weight="500" fill="#F5F0E8">La Chaux-de-Fonds</text>
+            <text x="60" y="286" font-family="'DM Mono',monospace" font-size="7" fill="#C9A84C">7/6–7/7</text>
+          </g>
+          <g class="city-dot">
+            <circle cx="246" cy="114" r="3.5" fill="none" stroke="#C9A84C" stroke-width="1.2" stroke-dasharray="2,2"/>
+            <text x="252" y="118" font-family="'DM Sans',sans-serif" font-size="7.5" fill="rgba(245,240,232,0.38)" font-style="italic">Eisenach?</text>
+          </g>
+        </g>
+        <g transform="translate(10,305)">
+          <circle cx="5" cy="5" r="4" fill="#2D4A3E"/>
+          <text x="13" y="9" font-family="'DM Sans',sans-serif" font-size="8.5" fill="rgba(245,240,232,0.45)">주요 거점</text>
+          <circle cx="72" cy="5" r="4" fill="#C9A84C"/>
+          <text x="80" y="9" font-family="'DM Sans',sans-serif" font-size="8.5" fill="rgba(245,240,232,0.45)">경유지</text>
+          <line x1="130" y1="5" x2="148" y2="5" stroke="#C9A84C" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <text x="153" y="9" font-family="'DM Sans',sans-serif" font-size="8.5" fill="rgba(245,240,232,0.45)">이동 루트</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- ITINERARY -->
+<section class="itinerary">
+  <div class="container">
+    <div class="section-label reveal">Full Schedule</div>
+    <h2 class="section-title reveal">일별 여행 일정</h2>
+    <p class="hint reveal">▼ 날짜를 탭하면 상세 내용이 펼쳐져요</p>
+    <div class="days-list reveal">
+
+      <div class="day-card">
+        <div class="day-header" onclick="tog(this)">
+          <div class="day-left">
+            <div class="date-box"><span class="mo">6월</span><span class="dn">29</span></div>
+            <div class="day-text"><div class="day-loc">Frankfurt 도착</div><div class="day-ev">17:40 아시아나 인천발</div></div>
+          </div>
+          <span class="badge ba">ARRIVAL</span>
+        </div>
+        <div class="day-body">
+          <div class="day-detail"><strong>터미널 1</strong>로 입국 (아시아나 항공)<br>공항 근처 호텔 체크인 · 휴식<br>다음날 렌트카 픽업 준비</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header" onclick="tog(this)">
+          <div class="day-left">
+            <div class="date-box"><span class="mo">6월</span><span class="dn">30</span></div>
+            <div class="day-text"><div class="day-loc">Frankfurt → Bad Kissingen</div><div class="day-ev">렌트카 수령 · 이동</div></div>
+          </div>
+          <span class="badge bd">2시간</span>
+        </div>
+        <div class="day-body">
+          <div class="day-detail"><strong>VW Tiguan</strong> 픽업 (Sixt 공항)<br>Frankfurt → (Wiesbaden 경유 가능) → Bad Kissingen<br>약 200km · A66 → A7 루트</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header" onclick="tog(this)">
+          <div class="day-left">
+            <div class="date-box"><span class="mo">7월</span><span class="dn">01</span></div>
+            <div class="day-text"><div class="day-loc">Bad Kissingen</div><div class="day-ev">🎵 Grigory Sokolov · 19:30</div></div>
+          </div>
+          <span class="badge bc">CONCERT</span>
+        </div>
+        <div class="day-body">
+          <div class="day-detail">오전 <strong>자유 일정</strong> — 온천 도시 산책<br>저녁 7시 전까지 여유<br>19:30 Grigory Sokolov 공연</div>
+        </div>
+      </div>
+
+      <div class="day-card hl">
+        <div class="day-header" onclick="tog(this)">
+          <div class="day-left">
+            <div class="date-box"><span class="mo">7월</span><span class="dn">02</span></div>
+            <div class="day-text"><div class="day-loc">Kissingen → Leipzig</div><div class="day-ev">라이프치히 이동</div></div>
+          </div>
+          <span class="badge bd">3.5시간</span>
+        </div>
+        <div class="day-body">
+          <div class="day-detail">Bad Kissingen → <strong>(Eisenach 경유 가능)</strong> → Leipzig<br>약 280km · A7 → A4 루트<br>Eisenach = 바르트부르크 성 방문 가능</div>
+        </div>
+      </div>
+
+      <div class="day-card hl">
+        <div class="day-header" onclick="tog(this)">
+          <div class="day-left">
+            <div class="date-box"><span class="mo">7월</span><span class="dn">03</span></div>
+            <div class="day-text"><div class="day-loc">Leipzig</div><div class="day-ev">🎵 Open Air Rosental</div></div>
+          </div>
+          <span class="badge bc">CONCERT</span>
+        </div>
+        <div class="day-body">
+          <div class="day-detail">Leipzig 시내 관광 — 게반트하우스, 구시가지<br>야외 공연장 <strong>Rosental</strong> 공연</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header" onclick="tog(this)">
+          <div class="day-left">
+            <div class="date-box"><span class="mo">7월</span><span class="dn">04</span></div>
+            <div class="day-text"><div class="day-loc">Leipzig → Bad Kissingen</div><div class="day-ev">복귀 이동</div></div>
+          </div>
+          <span class="badge bd">2.5시간</span>
+        </div>
+        <div class="day-body">
+          <div class="day-detail">Leipzig 마무리 관광 (슈만 박물관 등)<br>약 280km · A9 → A7<br>드레스덴 경유 가능 (일정 빡빡해짐)</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header" onclick="tog(this)">
+          <div class="day-left">
+            <div class="date-box"><span class="mo">7월</span><span class="dn">05</span></div>
+            <div class="day-text"><div class="day-loc">Kissingen → Bad Brückenau</div><div class="day-ev">🎵 조성진 공연 · 15:00</div></div>
+          </div>
+          <span class="badge bc">CONCERT</span>
+        </div>
+        <div class="day-body">
+          <div class="day-detail">Bad Kissingen → Bad Brückenau (<strong>약 30분</strong>)<br>15:00 조성진 공연<br>공연 후 → Baden-Baden (<strong>약 2.5시간</strong>)<br>예상 도착 20:00 전후</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header" onclick="tog(this)">
+          <div class="day-left">
+            <div class="date-box"><span class="mo">7월</span><span class="dn">06</span></div>
+            <div class="day-text"><div class="day-loc">Baden-Baden → La Chaux</div><div class="day-ev">스위스 이동</div></div>
+          </div>
+          <span class="badge bd">2.5시간</span>
+        </div>
+        <div class="day-body">
+          <div class="day-detail">Baden-Baden → Basel → La Chaux-de-Fonds<br>약 250km · <strong>A5 → 스위스 A1</strong><br>Basel 국경 통과 — 여권 필요<br><strong>스위스 비녜트</strong> 확인 필수</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header" onclick="tog(this)">
+          <div class="day-left">
+            <div class="date-box"><span class="mo">7월</span><span class="dn">07</span></div>
+            <div class="day-text"><div class="day-loc">La Chaux-de-Fonds</div><div class="day-ev">🎵 아르게리히 공연 · 19:30</div></div>
+          </div>
+          <span class="badge bc">CONCERT</span>
+        </div>
+        <div class="day-body">
+          <div class="day-detail">동네 구경 & 자유 일정<br>시계 박물관, 구시가지 산책<br>해발 <strong>1,000m</strong> 쥐라산맥 위 도시<br>19:30 아르게리히 공연</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header" onclick="tog(this)">
+          <div class="day-left">
+            <div class="date-box"><span class="mo">7월</span><span class="dn">08</span></div>
+            <div class="day-text"><div class="day-loc">Swiss → Germany</div><div class="day-ev">독일 복귀 · 이동일</div></div>
+          </div>
+          <span class="badge bd">4-5시간</span>
+        </div>
+        <div class="day-body">
+          <div class="day-detail">La Chaux-de-Fonds → Frankfurt 방향<br>약 430km · A1 → Basel → A5<br><strong>하이델베르크 경유 추천</strong> — 2~3시간 관광<br>7/9 여유를 위해 Frankfurt 근처 숙박 권장</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header" onclick="tog(this)">
+          <div class="day-left">
+            <div class="date-box"><span class="mo">7월</span><span class="dn">09</span></div>
+            <div class="day-text"><div class="day-loc">Frankfurt · 출국</div><div class="day-ev">아시아나 19:40 인천행</div></div>
+          </div>
+          <span class="badge ba">DEPART</span>
+        </div>
+        <div class="day-body">
+          <div class="day-detail"><strong>15:30</strong> 렌트카 반납 (공항 Sixt)<br><strong>16:00</strong> 터미널 1 도착<br><strong>17:00</strong> 체크인 & 보안검색<br><strong>19:40</strong> 아시아나 OZ 인천 출발</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ROUTES -->
+<section class="route-section">
+  <div class="container">
+    <div class="section-label reveal">Driving Routes</div>
+    <h2 class="section-title reveal">구간별 이동 정보</h2>
+    <div class="route-cards reveal">
+
+      <div class="route-card">
+        <div class="rh"><div class="rft">Frankfurt<span class="rarr">→</span>Bad Kissingen</div><span class="rtime">약 2시간</span></div>
+        <div class="rstats"><div class="rs"><span class="rsl">거리</span><span class="rsv">약 200km</span></div><div class="rs"><span class="rsl">루트</span><span class="rsv">A66 → A7</span></div></div>
+        <div class="rnote">Wiesbaden 경유 가능 (+30분). 온천 도시 잠깐 들르기 좋음.</div>
+      </div>
+
+      <div class="route-card">
+        <div class="rh"><div class="rft">Bad Kissingen<span class="rarr">→</span>Leipzig</div><span class="rtime">약 3.5시간</span></div>
+        <div class="rstats"><div class="rs"><span class="rsl">거리</span><span class="rsv">약 280km</span></div><div class="rs"><span class="rsl">루트</span><span class="rsv">A7 → A4</span></div></div>
+        <div class="rnote">Eisenach 경유 시 바르트부르크 성 방문 가능. 길목에 있어 자연스러움.</div>
+      </div>
+
+      <div class="route-card">
+        <div class="rh"><div class="rft">Leipzig<span class="rarr">→</span>Bad Kissingen</div><span class="rtime">약 2.5시간</span></div>
+        <div class="rstats"><div class="rs"><span class="rsl">거리</span><span class="rsv">약 280km</span></div><div class="rs"><span class="rsl">루트</span><span class="rsv">A9 → A7</span></div></div>
+        <div class="rnote">드레스덴 경유 가능하지만 당일 일정이 빡빡해짐.</div>
+      </div>
+
+      <div class="route-card">
+        <div class="rh"><div class="rft">Bad Brückenau<span class="rarr">→</span>Baden-Baden</div><span class="rtime">약 2.5시간</span></div>
+        <div class="rstats"><div class="rs"><span class="rsl">거리</span><span class="rsv">약 260km</span></div><div class="rs"><span class="rsl">루트</span><span class="rsv">A7 → A6 → A8</span></div></div>
+        <div class="rnote">조성진 공연(15:00) 후 이동. 17:00 출발 기준 20:00 전후 도착.</div>
+      </div>
+
+      <div class="route-card">
+        <div class="rh"><div class="rft">Baden-Baden<span class="rarr">→</span>La Chaux-de-Fonds</div><span class="rtime">약 2.5시간</span></div>
+        <div class="rstats"><div class="rs"><span class="rsl">거리</span><span class="rsv">약 250km</span></div><div class="rs"><span class="rsl">루트</span><span class="rsv">A5 → Basel → A1</span></div></div>
+        <div class="rnote">전 구간 고속도로. Basel에서 스위스 입국, 비녜트 확인 필수.</div>
+      </div>
+
+      <div class="route-card">
+        <div class="rh"><div class="rft">La Chaux-de-Fonds<span class="rarr">→</span>Frankfurt</div><span class="rtime">약 4.5시간</span></div>
+        <div class="rstats"><div class="rs"><span class="rsl">거리</span><span class="rsv">약 430km</span></div><div class="rs"><span class="rsl">루트</span><span class="rsv">A1 → Basel → A5</span></div></div>
+        <div class="rnote">하이델베르크 경유 추천. 7/8에 미리 Frankfurt 근처 이동해두면 7/9 여유로움.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TIPS -->
+<section class="tips-section">
+  <div class="container">
+    <div class="section-label reveal">Essential Notes</div>
+    <h2 class="section-title reveal">꼭 챙겨야 할 것들</h2>
+    <div class="tips-list reveal">
+      <div class="tip-card"><span class="tip-icon">🛂</span><div><div class="tip-title">국경 통과</div><div class="tip-body">독일→스위스는 EU 외 국경. <strong>여권 필수</strong> 지참. Basel 검사소, 대기는 거의 없음.</div></div></div>
+      <div class="tip-card"><span class="tip-icon">🏷️</span><div><div class="tip-title">스위스 비녜트</div><div class="tip-body">고속도로 통행권 <strong>약 40프랑</strong>. 렌트카 부착 여부 픽업 시 확인. 없으면 Basel 주유소 구매.</div></div></div>
+      <div class="tip-card"><span class="tip-icon">🚗</span><div><div class="tip-title">렌트카 서류</div><div class="tip-body"><strong>국제운전면허 + 한국 면허증</strong> 둘 다 필요. 추가 운전자는 반드시 카운터 등록.</div></div></div>
+      <div class="tip-card"><span class="tip-icon">⛽</span><div><div class="tip-title">주유 & 반납</div><div class="tip-body">Refuelling 서비스 불필요 (약 48,000원 절약). 반납 전 공항 근처에서 직접 가득 채울 것.</div></div></div>
+      <div class="tip-card"><span class="tip-icon">🕐</span><div><div class="tip-title">렌트카 반납</div><div class="tip-body">7/9 출국 19:40 기준 <strong>15:30 반납</strong> 권장. 1시간 초과 시 추가 1일 요금 발생.</div></div></div>
+      <div class="tip-card"><span class="tip-icon">📱</span><div><div class="tip-title">내비게이션</div><div class="tip-body">GPS 옵션 불필요. VW Tiguan은 <strong>CarPlay / Android Auto</strong> 기본 지원. 거치대만 챙기면 OK.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CAR -->
+<section class="car-section">
+  <div class="container">
+    <div class="section-label reveal">Vehicle</div>
+    <h2 class="section-title reveal">렌트카 정보</h2>
+    <div class="reveal">
+      <div class="car-name">VW Tiguan</div>
+      <div class="car-sub">Standard SUV Automatic · Sixt Frankfurt Airport</div>
+      <ul class="spec-list">
+        <li class="spec-item"><span class="spec-key">등급</span><span class="spec-val">Standard SUV</span></li>
+        <li class="spec-item"><span class="spec-key">변속기</span><span class="spec-val">자동 (Automatic)</span></li>
+        <li class="spec-item"><span class="spec-key">트렁크</span><span class="spec-val">520L · 캐리어 3개 가능</span></li>
+        <li class="spec-item"><span class="spec-key">일일 요금</span><span class="spec-val">$76.56 / 일</span></li>
+        <li class="spec-item"><span class="spec-key">총 요금</span><span class="spec-val">$765.58 (10일)</span></li>
+        <li class="spec-item"><span class="spec-key">주행거리</span><span class="spec-val">무제한 km</span></li>
+        <li class="spec-item"><span class="spec-key">픽업</span><span class="spec-val">6/30 · Frankfurt Airport</span></li>
+        <li class="spec-item"><span class="spec-key">반납</span><span class="spec-val">7/9 · 15:30 · Frankfurt Airport</span></li>
+      </ul>
+      <div class="cl-title">픽업 체크리스트</div>
+      <ul class="cl-items">
+        <li class="cl-item">여권 + 국제운전면허증 + 한국 면허증</li>
+        <li class="cl-item">Sixt 예약 확인서 (앱 or 출력본)</li>
+        <li class="cl-item">추가 운전자 카운터 등록 (면허증 지참)</li>
+        <li class="cl-item">스위스 비녜트 부착 여부 확인</li>
+        <li class="cl-item">스위스 진입 허용 여부 계약서 확인</li>
+        <li class="cl-item">차량 외관 스크래치 사전 촬영</li>
+        <li class="cl-item">Apple CarPlay 연결 테스트</li>
+        <li class="cl-item warn">GPS 옵션 추가 불필요 — 거절</li>
+        <li class="cl-item warn">Refuelling 서비스 불필요 — 거절</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft">Gute Reise! 🇩🇪</div>
+  <div class="fdiv"></div>
+  <div class="fs">Germany & Switzerland<br>June 29 – July 9, 2025 · 4 Travelers</div>
+</footer>
+
+<script>
+function tog(header) {
+  const body = header.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  document.querySelectorAll('.day-body').forEach(b => b.classList.remove('open'));
+  if (!isOpen) body.classList.add('open');
+}
+
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
